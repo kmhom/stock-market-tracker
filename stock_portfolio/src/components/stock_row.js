@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import alpaca_info from '../AlpacaAPI/api_key.js';
-import axios from require('axios');
+import axios from 'axios';
+import { Row } from 'react-bootstrap';
 
 class StockRow extends Component {
     constructor(props) {
@@ -8,23 +9,33 @@ class StockRow extends Component {
         this.state = {
             data: {}
         }
-
-        function fetchstockData(url) {
-            return axios.get(url)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        };
     }
 
+    async fetchstockData(url) {
+        console.log(url);
+        return axios.get(url)
+        .then((response) => {
+            console.log(response);
+        })
+        .then((data) => {
+            this.setState ({
+                data: {
+                    price: data.getstockSymbol()[data.getstockSymbol().length()-1].c
+                }
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
+
+    getstockSymbol() {
+        return `${this.props.ticker}`;
+    }
 
     componentDidMount(){
         const client = alpaca_info.data_ws;
-
-
+        this.fetchstockData("https://data.alpaca.markets/v1/bars/1D?symbols=" + this.getstockSymbol());
     }
 
     render() {
@@ -38,3 +49,5 @@ class StockRow extends Component {
         )
     }
 }
+
+export default StockRow

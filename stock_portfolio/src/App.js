@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import alpaca_logo from './alpaca_logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import StockRow from './components/stock_row.js';
 
 function App() {
   return (
@@ -17,6 +18,12 @@ function App() {
               <th>Time</th>
             </tr>
           </thead>
+          <tbody>
+            <StockRow ticker = "GOOGL" />
+            <StockRow ticker = "MSFT" />
+            <StockRow ticker = "AAPL" />
+            <StockRow ticker = "GME" />
+          </tbody>
         </table>
       </div>
     </div>
