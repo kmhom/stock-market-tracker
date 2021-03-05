@@ -33,9 +33,24 @@ class StockRow extends Component {
         return `${this.props.ticker}`;
     }
 
+    getaccountInfo () {
+        alpaca_info.getAccount().then((account) => {
+            console.log('Current Account:', account)
+          })
+    }
+
+    getstockexchangeClock(){
+        alpaca_info
+        .getClock()
+        .then((clock) => {
+            console.log(`The market is ${clock.is_open ? 'open.' : 'closed.'}`)
+        })
+    }
+
     componentDidMount(){
-        const client = alpaca_info.data_ws;
-        this.fetchstockData("https://data.alpaca.markets/v1/bars/1D?symbols=" + this.getstockSymbol());
+
+        this.getaccountInfo();
+        //this.fetchstockData("https://data.alpaca.markets/v1/bars/1D?symbols=" + this.getstockSymbol());
     }
 
     render() {
